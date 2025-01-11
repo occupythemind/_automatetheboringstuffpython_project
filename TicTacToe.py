@@ -26,21 +26,31 @@ class TicTacToe():
 
     def play(self):
         # User implements choice
-        tac = input("\n\033[95mChoose your play(X or O)?\n>> \033[0m")
-        if tac.lower() == 'x':
-            tac = '\033[91m X \033[0m'
-        elif tac.lower() == 'o':
-            tac = '\033[94m O \033[0m'
-        elif tac.lower() == 'q':
-            sys.exit()
-        else:
-            raise ValueError(f"Unsupported value, expecting X or O but got '{tac}'")
-        
-        return tac
-    
+        while True:
+            try:
+                tac = input("\n\033[95mChoose your play(X or O)?\n>> \033[0m")
+                if tac.lower() == 'x':
+                    tac = '\033[91m X \033[0m'
+                elif tac.lower() == 'o':
+                    tac = '\033[94m O \033[0m'
+                elif tac.lower() == 'q':
+                    sys.exit()
+                else:
+                    raise ValueError(f"Unsupported value, expecting X or O but got '{tac}'")
+                
+                return tac
+                break
+            except ValueError:
+                print(f"ValueError: Unsupported value, expecting X or O but got '{tac}'")
+                continue
+            except KeyboardInterrupt:
+                sys.exit()
+            except EOFError:
+                sys.exit()
+            
     def move(self, tac):
         # Move by the co-ordinates
-        move = input("\n\033[95mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m")
+        move = input("\n\033[95mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m").lower()
         if move == 'a2':
             self.board['top-L'] = tac
         elif move == 'a1':
@@ -76,5 +86,9 @@ if __name__ == '__main__':
         except InvalidMoveError:
             print("InvalidMove: Doesn't count")
             continue
+        except KeyboardInterrupt:
+            sys.exit()
+        except EOFError:
+            sys.exit()
 
 
