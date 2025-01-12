@@ -31,14 +31,16 @@ class TicTacToe():
                 tac = input("\n\033[95mChoose your play(X or O)?\n>> \033[0m")
                 if tac.lower() == 'x':
                     tac = '\033[91m X \033[0m'
+                    msgI = "\n\033[91mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m" #Red color input
                 elif tac.lower() == 'o':
                     tac = '\033[94m O \033[0m'
+                    msgI = "\n\033[94mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m" #Blue color input
                 elif tac.lower() == 'q':
                     sys.exit()
                 else:
                     raise ValueError(f"Unsupported value, expecting X or O but got '{tac}'")
                 
-                return tac
+                return tac, msgI
                 break
             except ValueError:
                 print(f"ValueError: Unsupported value, expecting X or O but got '{tac}'")
@@ -48,9 +50,10 @@ class TicTacToe():
             except EOFError:
                 sys.exit()
             
-    def move(self, tac):
+    def move(self, tac, msg):
         # Move by the co-ordinates
-        move = input("\n\033[95mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m").lower()
+        
+        move = input(msg).lower()
         if move == 'a2':
             self.board['top-L'] = tac
         elif move == 'a1':
@@ -78,10 +81,11 @@ if __name__ == '__main__':
     game = TicTacToe()
     game.msg
     game.print_gameplay()
-    tac = game.play()
+    tact = game.play()
+    tac, msg = tact[0], tact[1]
     while True:
         try:
-            game.move(tac)
+            game.move(tac, msg)
             game.print_gameplay()
         except InvalidMoveError:
             print("InvalidMove: Doesn't count")
