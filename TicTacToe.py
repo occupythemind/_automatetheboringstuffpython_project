@@ -6,6 +6,7 @@ import sys
 class InvalidMoveError(Exception): #For an invalid move
     pass
 
+
 class TicTacToe():
     def __init__(self):
         # ' X ' is red while ' O ' is blue 
@@ -14,7 +15,8 @@ class TicTacToe():
         self.board = {'top-L':'   ', 'top-M':'   ', 'top-R':'   ',
                 'mid-L':'   ', 'mid-M':'\033[91m X \033[0m', 'mid-R':'   ',
                 'low-L':'   ', 'low-M':'   ', 'low-R':'   '}
-    
+
+
     def print_gameplay(self):
         # a b c, 0 1 2 represent the co-ordinates for a gameplay
         print(f"\033[90m{self.board['top-L']}|{self.board['top-M']}|{self.board['top-R']}\033[0m   2")
@@ -24,6 +26,7 @@ class TicTacToe():
         print(f"\033[90m{self.board['low-L']}|{self.board['low-M']}|{self.board['low-R']}\033[0m   0")
         print(f"\na    b    c    ")
 
+
     def play(self):
         # User implements choice
         while True:
@@ -32,15 +35,17 @@ class TicTacToe():
                 if tac.lower() == 'x':
                     tac = '\033[91m X \033[0m'
                     msgI = "\n\033[91mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m" #Red color input
+                    player = 'X'
                 elif tac.lower() == 'o':
                     tac = '\033[94m O \033[0m'
                     msgI = "\n\033[94mEnter the co-ordinates of your move(eg. a1 for 1st upper left row)\n>> \033[0m" #Blue color input
+                    player = 'O'
                 elif tac.lower() == 'q':
                     sys.exit()
                 else:
                     raise ValueError(f"Unsupported value, expecting X or O but got '{tac}'")
                 
-                return tac, msgI
+                return tac, msgI, player
                 break
             except ValueError:
                 print(f"ValueError: Unsupported value, expecting X or O but got '{tac}'")
@@ -49,7 +54,8 @@ class TicTacToe():
                 sys.exit()
             except EOFError:
                 sys.exit()
-            
+
+
     def move(self, tac, msg):
         # Move by the co-ordinates
         
@@ -76,6 +82,17 @@ class TicTacToe():
             sys.exit()
         else:
             raise InvalidMoveError(f"Unsupported value, expecting a1, a2, a3, b1, b2, b3, c1, c2, c3 but got '{move}'")
+    
+
+    def competence(self):
+        ''' This is where the boards wil be checked for a particular user.'''
+        
+    def single_player(self):
+        '''Single player plays with computer'''
+    
+    def multi_player(self):
+        '''Play with a friend'''
+
 
 if __name__ == '__main__':
     game = TicTacToe()
